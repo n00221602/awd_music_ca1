@@ -37,9 +37,9 @@ class SongController extends Controller
     {
         //validator
         $request->validate([
-            'song_name' => 'required',
-            'genre' => 'required',
-            'album' => 'required',
+            'song_name' => 'required|max:50',
+            'genre' => 'required|max:25',
+            'album' => 'required|50',
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -85,19 +85,19 @@ class SongController extends Controller
     public function edit(Song $song)
     {
         //returns the edit view
-        return view('books.edit')->with('book', $book);
+        return view('songs.edit')->with('song', $song);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Song $song)
+    public function update(Request $request)
     {
-         //validator
-         $request->validate([
+        //validator
+        $request->validate([
             'song_name' => 'required|max:50',
             'genre' => 'required|max:25',
-            'album' => 'required|50',
+            'album' => 'required|max:50',
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -112,14 +112,17 @@ class SongController extends Controller
             $song_image_name = 'storage/books/' . $imageName;
         }
 
-        //updates a song
-        $song->update([
+        //title is pulled from the request,
+        //everything else is hardcoded at the moment
+        Song::create([
             'song_name' => $request->title,
             'genre' => $request->genre,
             'album' => $request->album,
             'release_date' => $request->release_date,
             'length' => $request->length,
-            'song_image' => $song_image_name
+            'song_image' => $song_image_name,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
         return to_route('songs.show', $song)->with('success', 'Song updated successfully'); // routes to show view with a success message
     }
@@ -130,6 +133,6 @@ class SongController extends Controller
     public function destroy(Song $song)
     {
         $song->delete();
-        return to_route('songs.index', $song)->with('success', 'Song updated successfully'); // routes to index view with a success message
+        return to_route('songs.index', $song)->with('success', 'Song deleted successfully'); // routes to index view with a success message
     }
 }
