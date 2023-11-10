@@ -37,7 +37,7 @@ class SongController extends Controller
     {
         //validator
         $request->validate([
-            'song_name' => 'required|max:50',
+            'title' => 'required|max:50',
             'genre' => 'required|max:25',
             'album' => 'required|max:50',
             'release_date' => 'required',
@@ -57,7 +57,7 @@ class SongController extends Controller
         //title is pulled from the request,
         //everything else is hardcoded at the moment
         Song::create([
-            'song_name' => $request->title,
+            'title' => $request->title,
             'genre' => $request->genre,
             'album' => $request->album,
             'release_date' => $request->release_date,
@@ -66,7 +66,7 @@ class SongController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        return to_route('songs.index', $song)->with('success', 'Song created successfully');  //returns to the index page with a success message
+        return to_route('songs.index')->with('success', 'Song created successfully');  //returns to the index page with a success message
     }
 
     /**
