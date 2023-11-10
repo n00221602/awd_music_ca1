@@ -17,7 +17,6 @@
                     field="title"
                     placeholder="Title"
                     class="w-full"
-                    autocomplete="off"
                     :value="@old('title')"></x-text-input>
 
                     <x-text-input

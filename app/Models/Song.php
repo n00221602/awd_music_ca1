@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-// A 'Model' represents a database table, it interacts with the database through our code
+// A 'Model' represents a database table, it interacts with the database through this code
 class Song extends Model
 {
     use HasFactory;

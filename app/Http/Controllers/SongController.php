@@ -39,7 +39,7 @@ class SongController extends Controller
         $request->validate([
             'song_name' => 'required|max:50',
             'genre' => 'required|max:25',
-            'album' => 'required|50',
+            'album' => 'required|max:50',
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -97,7 +97,7 @@ class SongController extends Controller
         $request->validate([
             'song_name' => 'required|max:50',
             'genre' => 'required|max:25',
-            'album' => 'required|max:50',
+            'album' => 'required|50',
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

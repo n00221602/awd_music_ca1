@@ -21,5 +21,5 @@ class SongsTableSeeder extends Seeder
 
 /*
 NOTES:
-'Seeders' are used to create default data that will be present in the final database. This is used when setting up a database, so the data must be clear and structured.
+'Seeders' are used to insert data into your database.
 */
