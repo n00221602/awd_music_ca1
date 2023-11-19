@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SongController;
+use App\Http\Controllers\Admin\SongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/songs', SongController::class);
+Route::resource('/admin/songs', \Admin\SongController::class);
+Route::resource('/user/songs', \User\SongController::class);
 
 require __DIR__.'/auth.php';
