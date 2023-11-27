@@ -16,19 +16,30 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('songs.index')" :active="request()->routeIs('songs.index')">
-                        {{ __('All songs') }}
-                    </x-nav-link>
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.songs.index')" :active="request()->routeIs('admin.songs.index')">
+                            {{ __('All Songs') }}
+                        </x-nav-link>
+                    @elseif(auth()->user()->hasRole('user'))
+                        <x-nav-link :href="route('user.songs.index')" :active="request()->routeIs('user.songs.index')">
+                            {{ __('All Songs') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('user.songs.index')" :active="request()->routeIs('user.songs.index')">
+                            {{ __('All Songs') }}
+                        </x-nav-link>
+                    @endif
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.songs.create')" :active="request()->routeIs('admin.songs.create')">
+                            {{ __('Create Song') }}
+                        </x-nav-link>
+
+                    @endif
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('songs.create')" :active="request()->routeIs('songs.create')">
-                        {{ __('Create a song') }}
-                    </x-nav-link>
-                </div>
-            </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Song;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 
 //Resource controllers include CRUD, which will be used with our resource (Song).
 
@@ -17,6 +16,8 @@ class SongController extends Controller
      */
     public function index()
     {
+
+        //only the admin role is authorised to use this function
         $user = Auth::user();
         $user->authorizeRoles('admin');
 

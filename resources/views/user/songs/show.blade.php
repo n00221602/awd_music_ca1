@@ -50,12 +50,6 @@
                                 </tr>
                         </tbody>
                     </table>
-                    <x-primary-button><a href="{{ route('songs.edit', $song) }}">Edit</a> </x-primary-button>
-                    {{-- a form for deleting a song --}}
-                    <form action="{{route('songs.destroy', $song)}}" method="post">
-                        @method('delete')
-                        @csrf
-                        <x-primary-button onclick="return confirm('Are you sure you want to delete?')">Delete</x-primary-button>
                     </form>
                 </div>
             </div>

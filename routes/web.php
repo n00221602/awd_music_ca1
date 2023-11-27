@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\SongController;
+use App\Http\Controllers\Admin\SongController as AdminSongController;
+use App\Http\Controllers\User\SongController as UserSongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/admin/songs', \Admin\SongController::class);
-Route::resource('/user/songs', \User\SongController::class);
+//creates all routes. only available once a user is logged in
+Route::resource('/admin/songs', AdminSongController::class)->middleware(['auth'])->names('admin.songs');
+Route::resource('/user/songs', UserSongController::class)->middleware(['auth'])->names('user.songs')->only(['index', 'show']);
 
 require __DIR__.'/auth.php';
