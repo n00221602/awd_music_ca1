@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Song;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Song;
 
 //Resource controllers include CRUD, which will be used with our resource (Song).
 

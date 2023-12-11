@@ -18,10 +18,12 @@
                         <a href="{{ route('user.songs.show', $song) }}">{{ $song->title }}</a>
                     </h2>
                     <p class="mt-2">
+
                         {{ $song->genre }}
                         {{ $song->album }}
                         {{ $song->release_date }}
                         {{ $song->length }}
+                        {{$song->label->name}}
                         @if ($song->song_image)
                             <img src="{{ asset($song->song_image) }}" alt="{{ $song->album }}" width="100">
                         @else

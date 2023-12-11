@@ -20,5 +20,19 @@ class Song extends Model
         'release_date',
         'length',
         'song_image',
+        'label_id'
     ];
+
+    //establishing the 1:M relationship between Label.Songs
+    //Here, we are saying that a song belongs to a label (aka a song can only belong to one label)
+    public function label()
+    {
+        return $this->belongsTo(Label::class);
+    }
+
+    //establishing the M:N relationship between Song-Artist
+    public function artists()
+    {
+        return $this->belongsToMany(Artist::class)->withTimestamps();
+    }
 }

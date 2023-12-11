@@ -6,6 +6,7 @@ use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Label;
 
 //Resource controllers include CRUD, which will be used with our resource (Song).
 
@@ -21,7 +22,9 @@ class SongController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $songs = Song::paginate(10);
+        //$songs = Song::all();
+        //$songs = Song::paginate(10);
+        $songs = Song::with('label')->get();
 
         return view('admin.songs.index')->with('songs', $songs);
 
@@ -37,7 +40,8 @@ class SongController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        return view('admin.songs.create');
+        $labels = Label::all();
+        return view('admin.songs.create')->with('labels',$labels);
     }
 
     /**
@@ -56,6 +60,7 @@ class SongController extends Controller
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'label_id' => 'required',
         ]);
 
         //creates a unique name for the image file
@@ -64,7 +69,7 @@ class SongController extends Controller
             $imageName = time() . '.' . $image->extension();
             // store image file into public disk under songs directory
             $image->storeAs('public/songs', $imageName);
-            $song_image_name = 'storage/books/' . $imageName;
+            $song_image_name = 'storage/songs/' . $imageName;
         }
 
         //title is pulled from the request,
@@ -76,6 +81,7 @@ class SongController extends Controller
             'release_date' => $request->release_date,
             'length' => $request->length,
             'song_image' => $song_image_name,
+            'label_id' => $request->label_id,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -103,7 +109,7 @@ class SongController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        //returns the edit view
+        $labels = Label::all();
         return view('admin.songs.edit')->with('song', $song);
     }
 
@@ -119,10 +125,11 @@ class SongController extends Controller
         $request->validate([
             'song_name' => 'required|max:50',
             'genre' => 'required|max:25',
-            'album' => 'required|50',
+            'album' => 'required|max:50',
             'release_date' => 'required',
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'label_id' => 'required',
         ]);
 
         //creates a unique name for the image file
@@ -131,7 +138,7 @@ class SongController extends Controller
             $imageName = time() . '.' . $image->extension();
             // store image file into public disk under songs directory
             $image->storeAs('public/songs', $imageName);
-            $song_image_name = 'storage/books/' . $imageName;
+            $song_image_name = 'storage/songs/' . $imageName;
         }
 
         //title is pulled from the request,
@@ -143,6 +150,7 @@ class SongController extends Controller
             'release_date' => $request->release_date,
             'length' => $request->length,
             'song_image' => $song_image_name,
+            'label_id' => $request->label_id,
             'created_at' => now(),
             'updated_at' => now()
         ]);

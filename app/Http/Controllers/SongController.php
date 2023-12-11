@@ -51,7 +51,7 @@ class SongController extends Controller
             $imageName = time() . '.' . $image->extension();
             // store image file into public disk under songs directory
             $image->storeAs('public/songs', $imageName);
-            $song_image_name = 'storage/books/' . $imageName;
+            $song_image_name = 'storage/songs/' . $imageName;
         }
 
         //title is pulled from the request,
@@ -109,7 +109,7 @@ class SongController extends Controller
             $imageName = time() . '.' . $image->extension();
             // store image file into public disk under songs directory
             $image->storeAs('public/songs', $imageName);
-            $song_image_name = 'storage/books/' . $imageName;
+            $song_image_name = 'storage/songs/' . $imageName;
         }
 
         //title is pulled from the request,

@@ -18,7 +18,7 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td class="font-bold ">Title  </td>
+                                <td class="font-bold ">Title </td>
                                 <td>{{ $song->title }}</td>
                             </tr>
 
@@ -45,9 +45,19 @@
                             <tr>
                                 <td rowspan="6">
                                     <!-- use the asset function, access the file $song->song_image in the folder storage/images -->
-                                    <img src="{{asset('storage/images/' . $song->song_image) }}" width="150" />
+                                    <img src="{{ asset('storage/images/' . $song->song_image) }}" width="150" />
                                 </td>
-                                </tr>
+                            </tr>
+
+                            <tr>
+                                <td class="font-bold ">Label </td>
+                                <td>{{ $song->label->name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="font-bold ">Label description </td>
+                                <td>{{ $song->label->description }}</td>
+                            </tr>
                         </tbody>
                     </table>
                     </form>
@@ -56,4 +66,3 @@
         </div>
     </div>
 </x-app-layout>
-

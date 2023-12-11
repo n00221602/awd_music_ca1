@@ -61,6 +61,10 @@
                     :value="@old('song_image')">>
                     </x-file-input>
 
+                    <div class="mt-6">
+                        <x-select-label name="label_id" :labels="$labels" :selected="old('label_id')"/>
+                    </div>
+
                     <x-primary-button class="mt-6">Save Song</x-primary-button>
                 </form>
             </div>

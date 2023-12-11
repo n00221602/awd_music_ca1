@@ -11,13 +11,15 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        Song::factory()->count(50)->create();
+        // $this->call(SongSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
+        // LabelSeeder calls hasSongs(). This seeds the songs table with 20 songs per publisher
+        $this->call(LabelSeeder::class);
+        // ArtistSeeder creates artists then gets all songs from the database and assigns artists to many songs
+        $this->call(ArtistSeeder::class);
 
 
     }

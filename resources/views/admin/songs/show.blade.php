@@ -18,7 +18,7 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td class="font-bold ">Title  </td>
+                                <td class="font-bold ">Title </td>
                                 <td>{{ $song->title }}</td>
                             </tr>
 
@@ -45,21 +45,31 @@
                             <tr>
                                 <td rowspan="6">
                                     <!-- use the asset function, access the file $song->song_image in the folder storage/images -->
-                                    <img src="{{asset('storage/images/' . $song->song_image) }}" width="150" />
+                                    <img src="{{ asset('../storage/images/' . $song->song_image) }}" width="150" />
                                 </td>
-                                </tr>
+                            </tr>
+
+                            <tr>
+                                <td class="font-bold ">Label </td>
+                                <td>{{ $song->label->name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="font-bold ">Label description </td>
+                                <td>{{ $song->label->description }}</td>
+                            </tr>
                         </tbody>
                     </table>
                     <x-primary-button><a href="{{ route('admin.songs.edit', $song) }}">Edit</a> </x-primary-button>
                     {{-- a form for deleting a song --}}
-                    <form action="{{route('admin.songs.destroy', $song)}}" method="post">
+                    <form action="{{ route('admin.songs.destroy', $song) }}" method="post">
                         @method('delete')
                         @csrf
-                        <x-primary-button onclick="return confirm('Are you sure you want to delete?')">Delete</x-primary-button>
+                        <x-primary-button
+                            onclick="return confirm('Are you sure you want to delete?')">Delete</x-primary-button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
