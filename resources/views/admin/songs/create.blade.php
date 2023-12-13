@@ -65,6 +65,14 @@
                         <x-select-label name="label_id" :labels="$labels" :selected="old('label_id')"/>
                     </div>
 
+                    <div class="form-group">
+                        <label for="artists"> <strong> Artists </strong> <br> </label>
+                        @foreach ($artists as $artist)
+                            <input type="checkbox", value="{{$artist->id}}" name="artists[]">
+                            {{$artist->name}}
+                        @endforeach
+                    </div>
+
                     <x-primary-button class="mt-6">Save Song</x-primary-button>
                 </form>
             </div>

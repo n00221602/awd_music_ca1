@@ -18,8 +18,8 @@ class ArtistFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'monthly_listeners' => $this->faker->monthly_listeners,
-            'debut' => $this->faker->debut,
+            'monthly_listeners' => $this->faker->numberBetween(100000, 10000000), //returns a fake number between 100,000 and 10,000,000
+            'debut' => $this->faker->year($max = 'now'), //returns a fake year up until our current year
         ];
     }
 }

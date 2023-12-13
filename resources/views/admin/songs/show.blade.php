@@ -18,27 +18,27 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td class="font-bold ">Title </td>
+                                <td class="font-bold ">Title: </td>
                                 <td>{{ $song->title }}</td>
                             </tr>
 
                             <tr>
-                                <td class="font-bold">Genre </td>
+                                <td class="font-bold">Genre: </td>
                                 <td>{{ $song->genre }}</td>
                             </tr>
 
                             <tr>
-                                <td class="font-bold ">Album </td>
+                                <td class="font-bold ">Album: </td>
                                 <td>{{ $song->album }}</td>
                             </tr>
 
                             <tr>
-                                <td class="font-bold ">Release date </td>
+                                <td class="font-bold ">Release date: </td>
                                 <td>{{ $song->release_date }}</td>
                             </tr>
 
                             <tr>
-                                <td class="font-bold ">Length </td>
+                                <td class="font-bold ">Length: </td>
                                 <td>{{ $song->length }}</td>
                             </tr>
 
@@ -50,26 +50,34 @@
                             </tr>
 
                             <tr>
-                                <td class="font-bold ">Label </td>
+                                <td class="font-bold ">Label: </td>
                                 <td>{{ $song->label->name }}</td>
                             </tr>
 
                             <tr>
-                                <td class="font-bold ">Label description </td>
+                                <td class="font-bold ">Label description: </td>
                                 <td>{{ $song->label->description }}</td>
                             </tr>
+
+                            <div class="font-bold mb-2">Artists: </div>
+                            @foreach ($song->artists as $artist)
+                                <a href="{{ route('admin.artists.show', $artist) }}">
+                                    <p>{{ $artist->name }}</p>
+                                </a>
+                            @endforeach
                         </tbody>
                     </table>
-                    <x-primary-button><a href="{{ route('admin.songs.edit', $song) }}">Edit</a> </x-primary-button>
-                    {{-- a form for deleting a song --}}
-                    <form action="{{ route('admin.songs.destroy', $song) }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <x-primary-button
-                            onclick="return confirm('Are you sure you want to delete?')">Delete</x-primary-button>
-                    </form>
                 </div>
+                <x-primary-button><a href="{{ route('admin.songs.edit', $song) }}">Edit</a> </x-primary-button>
+                {{-- a form for deleting a song --}}
+                <form action="{{ route('admin.songs.destroy', $song) }}" method="post">
+                    @method('delete')
+                    @csrf
+                    <x-primary-button
+                        onclick="return confirm('Are you sure you want to delete?')">Delete</x-primary-button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </x-app-layout>

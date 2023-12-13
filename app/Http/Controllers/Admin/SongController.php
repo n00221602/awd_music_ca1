@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Label;
+use App\Models\Artist;
 
 //Resource controllers include CRUD, which will be used with our resource (Song).
 
@@ -41,7 +42,9 @@ class SongController extends Controller
         $user->authorizeRoles('admin');
 
         $labels = Label::all();
-        return view('admin.songs.create')->with('labels',$labels);
+        $artists = Artist::all();
+
+        return view('admin.songs.create')->with('labels',$labels)->with('artists', $artists);
     }
 
     /**
@@ -61,6 +64,7 @@ class SongController extends Controller
             'length' => 'required',
             'song_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'label_id' => 'required',
+            'artists' =>['required', 'exists:artists,id']
         ]);
 
         //creates a unique name for the image file
@@ -74,7 +78,7 @@ class SongController extends Controller
 
         //title is pulled from the request,
         //everything else is hardcoded at the moment
-        Song::create([
+        $song = Song::create([
             'title' => $request->title,
             'genre' => $request->genre,
             'album' => $request->album,
@@ -85,6 +89,9 @@ class SongController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        $song->artists()->attach($request->artists);
+
         return to_route('admin.songs.index')->with('success', 'Song created successfully');  //returns to the index page with a success message
     }
 
@@ -110,20 +117,20 @@ class SongController extends Controller
         $user->authorizeRoles('admin');
 
         $labels = Label::all();
-        return view('admin.songs.edit')->with('song', $song);
+        return view('admin.songs.edit', compact('song', 'labels'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Song $song)
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
         //validator
         $request->validate([
-            'song_name' => 'required|max:50',
+            'title' => 'required|max:100',
             'genre' => 'required|max:25',
             'album' => 'required|max:50',
             'release_date' => 'required',
@@ -143,8 +150,8 @@ class SongController extends Controller
 
         //title is pulled from the request,
         //everything else is hardcoded at the moment
-        Song::create([
-            'song_name' => $request->title,
+        $song->update([
+            'title' => $request->title,
             'genre' => $request->genre,
             'album' => $request->album,
             'release_date' => $request->release_date,

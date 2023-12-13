@@ -90,7 +90,7 @@ class LabelController extends Controller
         $user->authorizeRoles('admin');
 
         $songs = Song::all();
-        return view('admin.labels.edit')->with('songs',$songs);
+        return view('admin.labels.edit', compact('label', 'songs'));
     }
 
     /**
@@ -109,13 +109,13 @@ class LabelController extends Controller
 
         //title is pulled from the request,
         //everything else is hardcoded at the moment
-        Label::create([
-            'name' => 'required|max:50',
-            'description' => 'required|max:200',
+        $label->update([
+            'name' => $request->name,
+            'description' => $request->description,
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        return to_route('admin.labels.show')->with('success', 'Label created successfully');  //returns to the show page with a success message
+        return redirect()->route('admin.labels.show', ['label' => $label->id])->with('success', 'Label updated successfully');  //returns to the show page with a success message
     }
 
     /**
@@ -128,6 +128,6 @@ class LabelController extends Controller
         $user->authorizeRoles('admin');
 
         $label->delete();
-        return to_route('admin.labels.index', $label)->with('success', 'Label deleted successfully'); // routes to index view with a success message
+        return redirect()->route('admin.labels.index')->with('success', 'Label deleted successfully');; // routes to index view with a success message
     }
 }
