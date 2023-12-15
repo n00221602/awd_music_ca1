@@ -35,7 +35,7 @@ class ArtistController extends Controller
         $user->authorizeRoles('admin');
 
         $artists = Artist::all();
-        return view('admin.labels.create')->with('artists',$artists);
+        return view('admin.artists.create')->with('artists',$artists);
     }
 
     /**
@@ -53,20 +53,12 @@ class ArtistController extends Controller
             'debut' => 'required|max:2023',
         ]);
 
-        if ($request->hasFile ('song_image')) {
-            $image = $request->file('song_image');
-            $imageName = time() . '.' . $image->extension();
-            // store image file into public disk under songs directory
-            $image->storeAs('public/songs', $imageName);
-            $song_image_name = 'storage/songs/' . $imageName;
-        }
-
         //title is pulled from the request,
         //everything else is hardcoded at the moment
         Artist::create([
-            'name' => 'required|max:50',
-            'monthly_listeners' => 'required|max:100000000',
-            'debut' => 'required|max:2023',
+            'name' => $request->name,
+            'monthly_listeners' => $request->monthly_listeners,
+            'debut' => $request->debut,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -100,7 +92,7 @@ class ArtistController extends Controller
         $user->authorizeRoles('admin');
 
         $songs = Song::all();
-        return view('admin.artists.edit')->with('songs',$songs);
+        return view('admin.artists.edit')->with('songs',$songs)->with('artist',$artist);
     }
 
     /**
@@ -129,13 +121,13 @@ class ArtistController extends Controller
         //title is pulled from the request,
         //everything else is hardcoded at the moment
         $artist->update([
-            'name' => 'required|max:50',
-            'monthly_listeners' => 'required|max:100000000',
-            'debut' => 'required|max:2023',
+            'name' => $request->name,
+            'monthly_listeners' => $request->monthly_listeners,
+            'debut' => $request->debut,
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        return to_route('admin.artists.show')->with('success', 'Artist created successfully');  //returns to the show page with a success message
+        return to_route('admin.artists.show', $artist)->with('success', 'Artist created successfully');  //returns to the show page with a success message
     }
 
     /**

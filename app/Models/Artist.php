@@ -11,6 +11,12 @@ class Artist extends Model
 
     protected $guarded = [];
 
+    protected $fillable = [
+        'name',
+        'monthly_listeners',
+        'debut',
+    ];
+
     //establishing the M:N relationship between Song-Artist
     public function songs()
     {

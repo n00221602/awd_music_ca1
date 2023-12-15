@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(SongSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        // LabelSeeder calls hasSongs(). This seeds the songs table with 20 songs per publisher
+        // LabelSeeder calls hasSongs(). This seeds the songs table with 20 songs per label
         $this->call(LabelSeeder::class);
         // ArtistSeeder creates artists then gets all songs from the database and assigns artists to many songs
         $this->call(ArtistSeeder::class);

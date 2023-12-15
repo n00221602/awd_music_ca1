@@ -172,6 +172,8 @@ class SongController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
+        $song->artists()->detach();
+
         $song->delete();
         return to_route('admin.songs.index', $song)->with('success', 'Song deleted successfully'); // routes to index view with a success message
     }

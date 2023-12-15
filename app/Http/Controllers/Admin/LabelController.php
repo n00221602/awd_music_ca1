@@ -55,8 +55,8 @@ class LabelController extends Controller
         //title is pulled from the request,
         //everything else is hardcoded at the moment
         Label::create([
-            'name' => 'required|max:50',
-            'description' => 'required|max:200',
+            'name' => $request->name,
+            'description' => $request->description,
             'created_at' => now(),
             'updated_at' => now()
         ]);
