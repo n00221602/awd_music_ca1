@@ -21,5 +21,5 @@ class SongsTableSeeder extends Seeder
 
 /*
 NOTES:
-'Seeders' are used to insert data into your database.
+'Seeders' are used to insert data into your database. in the code above, its inserting 10 samples of fake data created in our factory
 */
